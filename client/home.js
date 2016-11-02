@@ -1,51 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router';
+const testData = require('../server/model/database')
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   songs: [{
-    //   href: 'http://youtube.com/?stuff=cool',
-    //   title: 'Neat',
-    // }],
-    // };
-    // this.powers = {};
-    // this.powers.createEvent = function(eventObj) {
-    //   console.log('Posting Event: ', eventObj);
-    //     // TODO this functionality should be replaced with socket logic.
-    //     // let newQueues = [...Desklamp.getState().songs];
-    //     // newQueues.push(link);
-    //     // Desklamp.updateState({ songs: newQueues});
-    //     $.ajax({
-    //       url: HOST+"/create-event",
-    //       type:"POST",
-    //       data: JSON.stringify(eventObj),
-    //       contentType:"application/json; charset=utf-8",
-    //       dataType:"json",
-    //     });
-    // };
-    // this.powers.formClick = function(link) {
-    //     // TODO this functionality should be replaced with socket logic.
-    //     // let newQueues = [...Desklamp.getState().songs];
-    //     // newQueues.push(link);
-    //     // Desklamp.updateState({ songs: newQueues});
-    //     console.log('Posting NEW LINK : ', link);
-    //     $.ajax({
-    //       url: HOST+"/queue",
-    //       type:"POST",
-    //       data: JSON.stringify({link: link}),
-    //       contentType:"application/json; charset=utf-8",
-    //       dataType:"json",
-    //     });
-    // };
+    const ourStuff = testData.queue["5817dafb1da5550f5405937f"];
+    this.state = {
+      event: testData.event,
+      history: ourStuff,
+      songs: ourStuff,
+      guests: testData.guestList["5817dafb1da5550f5405937f"],
+      google_id: document.cookie.replace(/(?:(?:^|.*;\s*)google_id\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
+    };
+    this.newState = this.newState.bind(this);
+  }
+  newState(newStateObj) {
+        this.setState(newStateObj);
+  }
     // this.powers.getData = function() {
     //     $.get(HOST + "/queue").done((data) => {
     //         this.setState({songs: data});
     //       });
     // };
-
-  }
   render() {
     return (
       <div>
@@ -53,7 +30,10 @@ class Home extends React.Component {
         <ul role="nav">
           <li><Link to="profile">Home</Link></li>
         </ul>
-        {this.props.children}
+        {this.props.children && React.cloneElement(this.props.children, {
+          state: this.state,
+          newState: this.newState,
+        })}
       </div>
     )
   }

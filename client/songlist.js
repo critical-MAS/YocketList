@@ -7,9 +7,10 @@ class SongList extends React.Component {
   // }
   render() {
   let list;
-  console.log(this.props.songs);
+  const google_id = this.props.google_id;
+  const socket = this.props.socket;
    list = this.props.songs.map(function(songObj, ind) {
-      return <Song key={ind} data={songObj} />;
+      return <Song key={ind} data={songObj} socket={socket} google_id={google_id}/>;
     });
   console.log(list);
   return (

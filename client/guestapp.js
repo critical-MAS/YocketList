@@ -18,9 +18,15 @@ class GuestApp extends React.Component {
    * We GET our initial set of data here after the first render
    * has been made.
    */
-  // componentDidMount() {
-  //   this.socket = io.connect(HOST);
-  //   // Initialize Listener
+  componentDidMount() {
+    this.socket = io.connect(HOST);
+    this.socket.on('connect', () => {
+      console.log('Guest Socket Id: ', this.socket.id);
+      this.initSocket();
+    });
+
+  }
+    // Initialize Listener
   //   this.socket.on('event', () => {
   //     this.props.getData();
   //   });
@@ -39,6 +45,12 @@ class GuestApp extends React.Component {
       });
 
   };
+  initSocket () {
+    this.socket.on(`newdata:${this.props.state._id}`, (newStateObj) => {
+      console.log("got new newStateObj!", newStateObj);
+      this.props.newState(newStateObj);
+    });
+  }
   /**
    * This is the callback for the form component to use in onClick.
    * It makes an ajax request to add a new link when the submit button is clicked.
@@ -47,13 +59,13 @@ class GuestApp extends React.Component {
   render() {
     return (
       <div>
-        <h1>Event: {this.props.route.state.event.eventName}</h1>
-        <GuestBox guests={this.props.route.state.guests}/>
+        <h1>Event: {this.props.state.event.eventName}</h1>
+        <GuestBox guests={this.props.state.guests}/>
         <div className="SongList-Form-container">
-          <SongList songs={this.props.route.state.songs} />
+          <SongList songs={this.props.state.songs} socket={this.socket} google_id={this.props.state.google_id}/>
           <Form key={0} formClick={this.formClick.bind(this)} />
         </div>
-        <HistoryList history={this.props.route.state.history} />
+        <HistoryList history={this.props.state.history} />
       </div>
     )
   }

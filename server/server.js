@@ -147,14 +147,14 @@ app.get('/guestlist', (req, res) => {
 
 app.post('/queue/:id', (req, res) => {
   QueueController.add(req.params.id, req.body.link);
-  // io.emit('newdata', {songs: req.body, history: HistoryController.list, guests: GuestController.list});
+	console.log('Emitting newdata to: ', req.params.id);
+  io.emit(`newdata:${req.params.id}`, {songs: QueueController.storage, history: HistoryController.storage, guests: GuestController.storage});
 });
 
-app.post('/queue', (req, res) => {
-  // Testdata.queue.push(req.body);
-  io.emit('newdata', {songs: req.body, history: HistoryController.list, guests: GuestController.list});
-
-});
+// app.post('/queue', (req, res) => {
+//   // Testdata.queue.push(req.body);
+//   io.emit('newdata', {songs: req.body, history: HistoryController.list, guests: GuestController.list});
+// });
 
 app.post('/addqueue', (req, res) => {
   Testdata.queue.push(req.body);
@@ -167,7 +167,6 @@ app.post('/addqueue', (req, res) => {
 //guestlist.add(_id, guestObj)
 //guestlist[_id].push
 app.post('/joinevent', EventController.joinEvent, GuestController.addToList)
-
 
 
 // app.post('/queue', (req, res) => {
@@ -194,9 +193,8 @@ app.post('/joinevent', EventController.joinEvent, GuestController.addToList)
 
 /* Socket and Server Setup */
 io.on('connect', (socket) => {
-  socket.on('newsong', (roomID) => QueueController.nextSong(roomID));
+  socket.on('newSong', (roomID) => QueueController.nextSong(roomID));
   console.log(`User connected ${socket.id}`);
-  socket.emit('connectestablished', socket.id);
 })
 
 http.listen(3000, () => {

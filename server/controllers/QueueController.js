@@ -4,6 +4,7 @@ const QueueController = {};
 QueueController.storage = {};
 
 QueueController.add = (roomID, songURL) => {
+  console.log('Adding ', songURL, ' to event: ', roomID);
     if (QueueController.storage[roomID] !== undefined) {
       QueueController.storage[roomID].push(songURL);
     }

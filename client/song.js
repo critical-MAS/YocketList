@@ -5,8 +5,31 @@ class Song extends React.Component {
   // constructor(props) {
   //   super(props);
   // }
+  upVote() {
+    const upVoteObj = {
+      google_id: this.props.google_id,
+      url: this.props.data.url,
+    };
+    console.log('emitting upvote with: ', upVoteObj);
+    this.props.socket.emit('upVote', upVoteObj);
+  }
+  downVote() {
+    const downVoteObj = {
+      google_id: this.props.google_id,
+      url: this.props.data.url,
+    };
+    console.log('emitting downVote with: ', downVoteObj);
+    this.props.socket.emit('downVote', downVoteObj);
+  }
+  fave() {
+    const faveObj = {
+      google_id: this.props.google_id,
+      url: this.props.data.url,
+    };
+    console.log('emitting fave with: ', faveObj);
+    this.props.socket.emit('fave', faveObj);
+  }
   render() {
-    this.props.data.upVote = () => {console.log('clicked upvote!');};
     this.props.data.downVote = () => {console.log('clicked downvote!');};
     this.props.data.Fave = () => {console.log('clicked Fave!');};
     return (

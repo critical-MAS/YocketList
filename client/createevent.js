@@ -19,7 +19,7 @@ handleClick(e) {
   console.log('Posting New Event:', newEventObj);
   newEventObj.matchmaking = form.matchMakingEnabled.value === 'on' ? true : false;
   // this.props.powers.createEvent(newEventObj);
-  const newState = this.props.route.newState;
+  const newState = this.props.newState;
   $.ajax({
         url: HOST+"/create-event",
         type:"POST",

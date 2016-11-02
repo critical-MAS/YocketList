@@ -4,21 +4,25 @@ import React from 'react';
 import Youtube from 'react-youtube';
 import io from 'socket.io-client';
 import SongList from './songlist';
+import HistoryList from './historylist';
+import GuestBox from'./guestbox';
+import Form from './queueform';
 
-const HOST = "http://localhost:3000";
+const HOST = require('../app.config').HOST;
 
 class HostApp extends React.Component {
   constructor() {
     super();
-    this.state = {
-      urls : []
-    };
     this.handlePlayerEnd = this.handlePlayerEnd.bind(this);
-
+    this.formClick = this.formClick.bind(this);
+  }
+  componentDidMount() {
     //initiate socket connection and set up listeners
     this.socket = io.connect(HOST);
-    console.log(this.socket.id);
-    this.initSocket();
+    this.socket.on('connect', () => {
+      console.log('Host Socket Id: ', this.socket.id);
+      this.initSocket();
+    });
   }
   /**
    * This is where the listers for this.socket go.
@@ -26,23 +30,29 @@ class HostApp extends React.Component {
    *                the callback will make a GET request and update state
    *                with the new list of Youtube URLs
    */
+   formClick(link) {
+       console.log('Posting NEW LINK : ', link);
+       $.ajax({
+         url: HOST+"/queue/"+ this.props.params.eventId,
+         type:"POST",
+         data: JSON.stringify({link: link}),
+         contentType:"application/json; charset=utf-8",
+         dataType:"json",
+       });
+
+   };
   initSocket () {
-    this.socket.on('newdata', (data) => {
-      console.log("got new data");
-      $.ajax(HOST + "/queue").done((data) => {
-        this.setState({urls: data});
-      });
+    console.log('Current route State:', this.props.state);
+    console.log('Attaching event listener: ', `newdata:${this.props.state._id}`);
+    this.socket.on(`newdata:${this.props.state._id}`, (newStateObj) => {
+      console.log("got new newStateObj!", newStateObj);
+      this.props.newState(newStateObj);
     });
   }
   /**
    * We GET our initial set of data here after the first render
    * has been made.
    */
-  componentDidMount(){
-    $.get(HOST + "/queue").done((data) => {
-      this.setState({urls: data});
-    });
-  }
   /**
    * handleStateChange is an event listener for the react-youtube
    * componenet's state. The states are as follows:
@@ -61,29 +71,29 @@ class HostApp extends React.Component {
  * This removes an item from the db and notifies all clients with the newdata event.
  */
   handlePlayerEnd(event){
-    $.ajax({
-      type: "POST",
-      url: HOST + "/queue",
-      data: JSON.stringify({method: "delete"}),
-      contentType: "application/json; charset=utf-8",
-      });
+    this.socket.emit('newSong', this.props.state.event._id);
+    // $.ajax({
+    //   type: "POST",
+    //   url: HOST + "/queue",
+    //   data: JSON.stringify({method: "delete"}),
+    //   contentType: "application/json; charset=utf-8",
+    //   });
   }
 
   render() {
-    console.log(this.state.urls);
-    // Can we make it so the current video played is not
-    // displayed in the queue?
-      if(this.state.urls.length > 0){
-        var videoUrl = this.state.urls[0].split('=')[1];
-        console.log(videoUrl);
-    }
     return (
-    <div className="youtube-wrapper">
-      <Youtube videoId={videoUrl} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
-      <SongList songs={this.state.urls}/>
-    </div>
-    );
+      <div>
+        <h1>Hosting Event: {this.props.state.event.eventName}</h1>
+        <Youtube videoId={this.props.state.songs[0].url} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
+        <GuestBox guests={this.props.state.guests}/>
+        <div className="SongList-Form-container">
+          <SongList songs={this.props.state.songs} socket={this.socket} google_id={this.props.state.google_id}/>
+          <Form key={0} formClick={this.formClick} />
+        </div>
+        <HistoryList history={this.props.state.history} socket={this.socket}/>
+      </div>
+    )
   }
-}
+  }
 
 export default HostApp;
