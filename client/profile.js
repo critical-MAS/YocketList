@@ -11,31 +11,37 @@ class Profile extends React.Component {
     console.log('hi!');
   }
   joinRoom() {
-    const form = document.forms.joinRoom;
-    const google_id = document.cookie.replace(/(?:(?:^|.*;\s*)google_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+  
+      const form = document.forms.joinRoom;
+      const google_id = document.cookie.replace(/(?:(?:^|.*;\s*)google_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
-    const newEventObj = {
-      google_id,
-      eventName: form.eventName.value,
-      eventPassword: form.eventPassword.value,
-    };
-    console.log('Attempting to Join Event:', newEventObj);
-    // this.props.powers.createEvent(newEventObj);
-    const newState = this.props.newState;
-    $.ajax({
-          url: HOST+"/joinevent",
-          type:"POST",
-          data: JSON.stringify(newEventObj),
-          contentType:"application/json; charset=utf-8",
-          dataType:"json",
-        }).always(function(response) {
-          console.log('Got a response with event data: ', response);
-          if (response['errmsg']) {
-            alert('Room not Found!');
-          } else {
-            newState(response);
-            window.location = `/#/guest/${response.event._id}`;
-      }});
+      if (form.eventName.value && form.eventPassword.value) {
+
+      const newEventObj = {
+        google_id,
+        eventName: form.eventName.value,
+        eventPassword: form.eventPassword.value,
+      };
+      console.log('Attempting to Join Event:', newEventObj);
+      // this.props.powers.createEvent(newEventObj);
+      const newState = this.props.newState;
+      $.ajax({
+            url: HOST+"/joinevent",
+            type:"POST",
+            data: JSON.stringify(newEventObj),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+          }).always(function(response) {
+            console.log('Got a response with event data: ', response);
+            if (response['errmsg']) {
+              alert('Room not Found!');
+            } else {
+              newState(response);
+              window.location = `/#/guest/${response.event._id}`;
+        }});
+
+  }
+  else { alert('Please enter a username and password to join an event.') }
   }
 
   render() {

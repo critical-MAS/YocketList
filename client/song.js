@@ -30,11 +30,12 @@ class Song extends React.Component {
     this.props.socket.emit('fave', faveObj);
   }
   render() {
+    console.log('Song Data', this.props.data)
     this.props.data.downVote = () => {console.log('clicked downvote!');};
     this.props.data.Fave = () => {console.log('clicked Fave!');};
     return (
       <div>
-        {this.props.data.title}, added by: {this.props.data.added_by}
+        {this.props.data.title} Added By: {this.props.data.addedBy}
         <img src={`https://i.ytimg.com/vi/${this.props.data.url.split('=')[1]}/hqdefault.jpg`}></img>
         <div className="Action-upVote" onClick={() => this.props.data.upVote(this.props.data.url)} />
         <div className="Action-downVote" onClick={() => this.props.data.downVote(this.props.data.url)} />

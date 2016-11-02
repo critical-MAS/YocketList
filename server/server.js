@@ -112,8 +112,6 @@ app.get('/bundle.js', (req, res, next) => {
   res.status(200).sendFile(path.join(__dirname, '../dist/bundle.js'));
 })
 
-app.post('/create-event', EventController.addToList)
-
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
@@ -146,9 +144,9 @@ app.get('/guestlist', (req, res) => {
 //adding new data to queue, adds to the end of the list
 
 app.post('/queue/:id', (req, res) => {
-  QueueController.add(req.params.id, req.body.link);
+  QueueController.add(req.params.id, req.cookies.username, req.body.link);
 	console.log('Emitting newdata to: ', req.params.id);
-  io.emit(`newdata:${req.params.id}`, {songs: QueueController.storage, history: HistoryController.storage, guests: GuestController.storage});
+  io.emit(`newdata:${req.params.id}`, {songs: QueueController.storage[req.params.id], history: HistoryController.storage[req.params.id], guests: GuestController.storage[req.params.id]});
 });
 
 // app.post('/queue', (req, res) => {
@@ -163,11 +161,13 @@ app.post('/addqueue', (req, res) => {
   res.end();
 })
 
+app.post('/create-event', EventController.addToList, GuestController.addToList, (req, res) => {
+  res.json(req.body.newState);
+})
 
-//guestlist.add(_id, guestObj)
-//guestlist[_id].push
-app.post('/joinevent', EventController.joinEvent, GuestController.addToList)
-
+app.post('/joinevent', EventController.joinEvent, GuestController.addToList, (req, res) => {
+  res.json(req.body.newState);
+});
 
 // app.post('/queue', (req, res) => {
 //   if(req.body.method){
@@ -193,7 +193,7 @@ app.post('/joinevent', EventController.joinEvent, GuestController.addToList)
 
 /* Socket and Server Setup */
 io.on('connect', (socket) => {
-  socket.on('newSong', (roomID) => QueueController.nextSong(roomID));
+  socket.on('nextSong', (roomID) => QueueController.nextSong(roomID));
   console.log(`User connected ${socket.id}`);
 })
 

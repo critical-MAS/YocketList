@@ -42,9 +42,9 @@ class HostApp extends React.Component {
 
    };
   initSocket () {
-    console.log('Current route State:', this.props.state);
-    console.log('Attaching event listener: ', `newdata:${this.props.state._id}`);
-    this.socket.on(`newdata:${this.props.state._id}`, (newStateObj) => {
+    console.log('Current route State:', JSON.stringify(this.props.state));
+    console.log('Attaching event listener: ', `newdata:${this.props.state.event._id}`);
+    this.socket.on(`newdata:${this.props.state.event._id}`, (newStateObj) => {
       console.log("got new newStateObj!", newStateObj);
       this.props.newState(newStateObj);
     });
@@ -71,7 +71,7 @@ class HostApp extends React.Component {
  * This removes an item from the db and notifies all clients with the newdata event.
  */
   handlePlayerEnd(event){
-    this.socket.emit('newSong', this.props.state.event._id);
+    this.socket.emit('nextSong', this.props.state.event._id);
     // $.ajax({
     //   type: "POST",
     //   url: HOST + "/queue",
@@ -81,10 +81,17 @@ class HostApp extends React.Component {
   }
 
   render() {
+    let player;
+
+    if (this.props.state.songs.length) {
+      player = <Youtube videoId={this.props.state.songs[0].url} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
+    }
+    else { player = <div />}
+
     return (
       <div>
         <h1>Hosting Event: {this.props.state.event.eventName}</h1>
-        <Youtube videoId={this.props.state.songs[0].url} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
+        {player}
         <GuestBox guests={this.props.state.guests}/>
         <div className="SongList-Form-container">
           <SongList songs={this.props.state.songs} socket={this.socket} google_id={this.props.state.google_id}/>

@@ -6,15 +6,16 @@ const QueueController = require('./QueueController');
 
 const EventController = {};
 
-EventController.addToList = (req, res) => {
-  console.log('user obj: ', req.user);
+EventController.addToList = (req, res, next) => {
+  console.log('user cookie: ', req.cookies.username);
   Event.create(req.body)
   .then(data => {
     console.log('Created New Event: ', data);
     HistoryController.storage[data._id] = [];
     QueueController.storage[data._id] = [];
-    GuestController.storage[data._id] = [req.user.username];
-    res.json(data);
+    GuestController.storage[data._id] = [req.cookies.username];
+    req.body.newState = {event: data};
+    next();
   })
   .catch(err => {
     console.log('Error creating Event: ', err);
@@ -35,7 +36,8 @@ EventController.joinEvent = (req, res, next) => {
       guests: GuestController.storage[event._id]
     };
     console.log('response:', responseObj);
-    res.send(JSON.stringify(responseObj));
+    // res.send(JSON.stringify(responseObj));
+    req.body.newState = responseObj;
     next();
   })
   .catch(err => {
