@@ -21,7 +21,7 @@ class Profile extends React.Component {
     };
     console.log('Attempting to Join Event:', newEventObj);
     // this.props.powers.createEvent(newEventObj);
-    const newState = this.props.route.newState;
+    const newState = this.props.newState;
     $.ajax({
           url: HOST+"/joinevent",
           type:"POST",

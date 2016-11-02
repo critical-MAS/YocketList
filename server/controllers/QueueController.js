@@ -7,6 +7,7 @@ const QueueController = {};
 QueueController.storage = JSON.parse(fs.readFileSync(path.join(__dirname, '../cache/QueueCache.json')));
 
 QueueController.add = (roomID, songURL) => {
+  console.log('Adding ', songURL, ' to event: ', roomID);
     if (QueueController.storage[roomID] !== undefined) {
       QueueController.storage[roomID].push(songURL);
       fs.writeFileSync(path.join(__dirname, '../cache/EventCache.json'), JSON.stringify(QueueController.storage, null, 2));
