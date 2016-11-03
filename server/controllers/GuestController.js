@@ -17,8 +17,9 @@ GuestController.addToList = (req, res, next) => {
         else { GuestController.storage[req.body.event_id] = [user]; }
       fs.writeFileSync(path.join(__dirname, '../cache/GuestCache.json'), JSON.stringify(GuestController.storage, null, 2));
       req.body.newState.guests = GuestController.storage[req.body.event_id];
+      console.log('req.body has events and guests', req.body.newState)
+      next();
     });
-    next();
 };
 
 
