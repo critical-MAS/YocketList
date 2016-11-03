@@ -1,6 +1,5 @@
 import React from 'react';
 import Guest from './guest';
-const testData = require('../server/model/database')
 
 class GuestBox extends React.Component {
   // constructor(props) {

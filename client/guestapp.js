@@ -6,7 +6,6 @@ import SongList from './songlist';
 import HistoryList from './historylist';
 import GuestBox from'./guestbox';
 import io from 'socket.io-client';
-const testData = require('../server/model/database')
 
 const HOST = "http://localhost:3000";
 

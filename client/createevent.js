@@ -39,13 +39,13 @@ handleClick(e) {
 render() {
   return (
     <div>
-      <h1>Having a Party, eh?</h1>
+      <h1>Party Time.</h1>
       <form name="newParty">
         Event Name: <input type='text' name='eventName' placeholder='Orangutan Jam'></input>
         Event Password: <input type='text' name='eventPass' placeholder='CrazyApes'></input>
         Fave Matchmaking Enabled: <input type='checkbox' name='matchMakingEnabled'></input>
       </form>
-      <button onClick={this.handleClick.bind(this)}>Create</button>
+      <button className='btn-create' onClick={this.handleClick.bind(this)}>Create</button>
       </div>
       )
   }

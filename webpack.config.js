@@ -18,25 +18,31 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
+    devServer: {
+      proxy: {
+        '**': {
+          target: 'http://localhost:3000',
+          secure: false
+        },
+      }
+    },
     contentBase: PATHS.dist,
   },
   eslint: {
     emitWarning: true,
   },
   module: {
-    loaders: [
-      {
-        test: /\.html$/,
-        loader: 'file?name=[name].[ext]',
-      }, {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        loaders: ['babel-loader'],
-      }, {
-        test: /\.(css|scss)$/,
-        loaders: ['style', 'css', 'sass']
-      }
-    ],
+    loaders: [{
+      test: /\.html$/,
+      loader: 'file?name=[name].[ext]',
+    }, {
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      loaders: ['babel-loader'],
+    }, {
+      test: /\.(css|scss)$/,
+      loaders: ['style', 'css', 'sass']
+    }],
   },
   externals: {
     'cheerio': 'window',
