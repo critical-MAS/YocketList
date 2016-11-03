@@ -24,7 +24,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>YukeToob</h1>
+        <h1>YukeTube</h1>
         <ul role="nav">
           <li><Link to="profile">Home</Link></li>
         </ul>

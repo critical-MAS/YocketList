@@ -197,7 +197,7 @@ io.on('connect', (socket) => {
     console.log('got next song event from roomID: ', roomID)
     QueueController.nextSong(roomID);
     console.log('Emitting newData \'cuz songs on:', roomID);
-    io.emit(`newdata:${roomID}`, {songs: QueueController.storage[roomID]});
+    io.emit(`newdata:${roomID}`, { songs: QueueController.storage[roomID], history: HistoryController.storage[roomID] });
   }
     );
   console.log(`User connected ${socket.id}`);

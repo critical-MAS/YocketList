@@ -7,12 +7,12 @@ HistoryController.storage = JSON.parse(fs.readFileSync(path.join(__dirname, '../
 HistoryController.add = (roomID, songObj) => {
     if (HistoryController.storage[roomID] !== undefined) {
       HistoryController.storage[roomID].unshift(songObj);
-      fs.writeFileSync(path.join(__dirname, '../cache/EventCache.json'), JSON.stringify(HistoryController.storage, null, 2));
+      fs.writeFileSync(path.join(__dirname, '../cache/HistoryCache.json'), JSON.stringify(HistoryController.storage, null, 2));
     }
     else {
       HistoryController.storage[roomID] = [];
       HistoryController.storage[roomID].unshift(songObj);
-      fs.writeFileSync(path.join(__dirname, '../cache/EventCache.json'), JSON.stringify(HistoryController.storage, null, 2));
+      fs.writeFileSync(path.join(__dirname, '../cache/HistoryCache.json'), JSON.stringify(HistoryController.storage, null, 2));
     }
 };
 
