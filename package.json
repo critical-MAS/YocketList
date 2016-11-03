@@ -7,7 +7,7 @@
     "test": "mocha test",
     "start": "webpack-dev-server --inline --hot",
     "build": "webpack -w",
-    "serve": "nodemon server/server.js"
+    "serve": "nodemon --ignore server/cache/ server/server.js"
   },
   "repository": {
     "type": "git",

@@ -10,12 +10,13 @@ QueueController.add = (roomID, username, songURL) => {
   console.log('Adding ', songURL, ' to event: ', roomID);
     if (QueueController.storage[roomID] !== undefined) {
       QueueController.storage[roomID].push({addedBy: username, url: songURL});
-      fs.writeFileSync(path.join(__dirname, '../cache/EventCache.json'), JSON.stringify(QueueController.storage, null, 2));
+      fs.writeFileSync(path.join(__dirname, '../cache/QueueCache.json'), JSON.stringify(QueueController.storage, null, 2));
     }
     else {
       QueueController.storage[roomID] = [];
       QueueController.storage[roomID].push({addedBy: username, url: songURL});
     }
+    console.log('Storage after push:', QueueController.storage);
 };
 
 // QueueController.remove = (roomID, songURL) => {
@@ -32,13 +33,15 @@ QueueController.add = (roomID, username, songURL) => {
 // };
 
 QueueController.nextSong = (roomID) => {
+  console.log('looking for room: ', roomID);
+  console.log('in Quecontrontroller.storage: ', QueueController.storage);
     if (QueueController.storage[roomID] === undefined) {
       throw new Error ('roomID not found.');
     }
     else if (QueueController.storage[roomID][0]) {
       let lastSongObj = QueueController.storage[roomID].shift();
       HistoryController.add(roomID, lastSongObj);
-      fs.writeFileSync(path.join(__dirname, '../cache/EventCache.json'), JSON.stringify(QueueController.storage, null, 2));
+      fs.writeFileSync(path.join(__dirname, '../cache/QueueCache.json'), JSON.stringify(QueueController.storage, null, 2));
       return lastSongObj;
     }
     throw new Error ('No next song in queue.');

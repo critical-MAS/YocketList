@@ -46,8 +46,8 @@ class GuestApp extends React.Component {
 
   };
   initSocket () {
-    this.socket.on(`newdata:${this.props.state.event._id}`, (newStateObj) => {
       console.log('Attaching event listener: ', `newdata:${this.props.state.event._id}`);
+    this.socket.on(`newdata:${this.props.state.event._id}`, (newStateObj) => {
       console.log("got new newStateObj!", newStateObj);
       this.props.newState(newStateObj);
     });
