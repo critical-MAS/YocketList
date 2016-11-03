@@ -7,10 +7,29 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.username = document.cookie.replace(/(?:(?:^|.*;\s*)username\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    this.google_id = document.cookie.replace(/(?:(?:^|.*;\s*)google_id\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 
   }
   updateUser() {
-    console.log('hi!');
+    console.log('hi! let\'s update your name, eh?');
+    const form = document.forms.displayNameUpdate;
+    const userUpdateObj = {
+      username: form.username.value,
+      google_id: this.google_id,
+    };
+    console.log('Sending userUpdateObj: ', userUpdateObj);
+    $.ajax({
+          url: HOST+"/updateUser",
+          type:"POST",
+          data: JSON.stringify(userUpdateObj),
+          contentType:"application/json; charset=utf-8",
+          dataType:"json",
+        }).always(function(response) {
+          console.log('Got a response with new user data: ', response);
+          if (response['errmsg']) {
+            alert('Something Went Wrong with your Name Update!');
+          }
+      });
   }
   joinRoom() {
 
@@ -27,23 +46,21 @@ class Profile extends React.Component {
       console.log('Attempting to Join Event:', newEventObj);
       // this.props.powers.createEvent(newEventObj);
       const newState = this.props.newState;
-      $.ajax({
-            url: HOST+"/joinevent",
-            type:"POST",
-            data: JSON.stringify(newEventObj),
-            contentType:"application/json; charset=utf-8",
-            dataType:"json",
-          }).always(function(response) {
-            console.log('Got a response with event data: ', response);
-            if (response['errmsg']) {
-              alert('Room not Found!');
-            } else {
-              newState(response);
-              window.location = `/#/guest/${response.event._id}`;
-        }});
-
-  }
-  else { alert('Please enter a username and password to join an event.') }
+        $.ajax({
+              url: HOST+"/joinevent",
+              type:"POST",
+              data: JSON.stringify(newEventObj),
+              contentType:"application/json; charset=utf-8",
+              dataType:"json",
+            }).always(function(response) {
+              console.log('Got a response with event data: ', response);
+              if (response['errmsg']) {
+                alert('Room not Found!');
+              } else {
+                newState(response);
+                window.location = `/#/guest/${response.event._id}`;
+          }});
+        } else alert('Please enter a username and password to join an event.')
   }
 
   render() {
@@ -53,7 +70,7 @@ class Profile extends React.Component {
     <form name="displayNameUpdate">
       <input type='text' name='username' defaultValue={this.username}></input>
     </form>
-    <button onClick={this.updateUser}>Update Name</button>
+    <button onClick={this.updateUser.bind(this)}>Update Name</button>
     <form name="joinRoom">
       <input type='text' name='eventName' placeholder="Event Name"></input>
       <input type='text' name='eventPassword' placeholder = "Event Password"></input>
