@@ -9,12 +9,14 @@ const EventController = {};
 EventController.addToList = (req, res, next) => {
   console.log('user cookie: ', req.cookies.username);
   Event.create(req.body)
-  .then(data => {
-    console.log('Created New Event: ', data);
-    HistoryController.storage[data._id] = [];
-    QueueController.storage[data._id] = [];
-    GuestController.storage[data._id] = [req.cookies.username];
-    req.body.newState = {event: data};
+  .then(event => {
+    console.log('Created New Event: ', event);
+    HistoryController.storage[event._id] = [];
+    QueueController.storage[event._id] = [];
+    GuestController.storage[event._id] = [];
+    req.body.event_id = event._id;
+    req.body.newState = {event};
+    console.log('setting event_id on req.body. eventObj: ', event);
     next();
   })
   .catch(err => {
@@ -27,7 +29,7 @@ EventController.joinEvent = (req, res, next) => {
   Event.findOne({eventName: req.body.eventName})
   .where('eventPassword').equals(req.body.eventPassword)
   .then(event => {
-    console.log('setting event_id on req.body', event);
+    console.log('setting event_id on req.body. eventObj: ', event);
     req.body["event_id"] = event._id;
     const responseObj = {
       event: event,

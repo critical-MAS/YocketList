@@ -1,5 +1,59 @@
+$primary: #ccc;
+$secondary: #201a1a;
+$tertiary: #b00;
+$quaternary: aliceblue;
+
 body {
-  background-color: grey;
+  width: 100%;
+  color: $primary;
+  background-color: $secondary;
+  font-family: 'Slabo 27px';
+}
+h1 {
+  border-radius: 0.5em;
+  // display: inline-block;
+  padding: 0.25em 0.5em;
+  width:6em;
+  text-align: center;
+  margin: 0em auto 0.5em auto;
+  background-color: $tertiary;
+}
+div {
+  width: 100%;
+  text-align: center;
+}
+ul {
+  background-color: $secondary;
+  list-style: none;
+  padding: 1em 2em;
+}
+a, button {
+  font-size: 1em;
+  font-family: 'Slabo 27px';
+  text-decoration: none;
+  border: none;
+  color: $tertiary;
+  background-color: $quaternary;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  margin: 1em;
+}
+a:hover, button:hover {
+  background-color: $tertiary;
+  color: $quaternary;
+}
+button {
+  margin-bottom: 5em;
+}
+input {
+  color: $quaternary;
+  text-align: center;
+  background-color: $secondary * 1.2;
+  border: 1px dashed $quaternary;
+  padding: 1em 2em;
+  border-radius: 3px;
+  font-family: 'Slabo 27px';
+  margin: 2em 2em 0 1em;
 }
 .Action-upVote, .Action-downVote, .Action-Fave {
     width: 1em;
@@ -15,10 +69,8 @@ body {
 .Action-Fave {
     background-color: pink;
 }
-.SongList-Form-container {
-  width: 45%;
-  margin-left: 2.5%;
-  float: left;
+.btn-create {
+  margin-top: 3em;
 }
 .Form-Container input {
   width: 85%;
@@ -32,10 +84,10 @@ body {
   display: none;
 }
 .HistoryItem:nth-of-type(odd) {
-  background-color: #ccc;
+  background-color: $secondary * 0.8;
 }
 .HistoryItem:nth-of-type(even) {
-  background-color: #eee;
+  background-color: $secondary * 1.2;
 }
 .HistoryList {
   float: left;
@@ -46,7 +98,7 @@ body {
   padding: 0px;
 }
 .HistoryList h4, .SongList h4, .GuestBox h4, {
-  background-color: dodgerblue;
+  background-color: $tertiary;
   margin : 0em;
   padding : 0.3em;
 
@@ -56,7 +108,11 @@ body {
 }
 
 .SongList, .HistoryList, .GuestBox {
-  border: 1px dotted #aff;
   border-radius: 5px;
   padding: 0px;
+}
+.SongList-Form-container {
+  width: 45%;
+  margin-left: 2.5%;
+  float: left;
 }

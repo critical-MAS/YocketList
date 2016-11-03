@@ -83,12 +83,12 @@ class HostApp extends React.Component {
 
   render() {
     let player;
-    console.log('current youtube id:', this.props.state.songs[0].url.split('=')[1])
 
     if (this.props.state.songs.length) {
+      console.log('current youtube id:', this.props.state.songs[0].url.split('=')[1])
       player = <Youtube videoId={this.props.state.songs[0].url.split('=')[1]} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
     }
-    else { player = <div />}
+    else { player = <div className="no-queue">Queue Up Some Jams!</div>}
 
     return (
       <div>
