@@ -32,7 +32,7 @@ handleClick(e) {
           alert('That name already exists!');
         } else {
           newState(response);
-          window.location = `/#/host/${response._id}`;
+          window.location = `/#/host/${response.event._id}`;
     }});
 }
 

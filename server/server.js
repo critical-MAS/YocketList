@@ -193,9 +193,15 @@ app.post('/joinevent', EventController.joinEvent, GuestController.addToList, (re
 
 /* Socket and Server Setup */
 io.on('connect', (socket) => {
-  socket.on('nextSong', (roomID) => QueueController.nextSong(roomID));
+  socket.on('nextSong', (roomID) => {
+    console.log('got next song event from roomID: ', roomID)
+    QueueController.nextSong(roomID);
+    console.log('Emitting newData \'cuz songs on:', roomID);
+    socket.emit(`newdata:${roomID}`, {songs: QueueController.storage[roomID]});
+  }
+    );
   console.log(`User connected ${socket.id}`);
-})
+});
 
 http.listen(3000, () => {
   console.log("Server started on port 3000");

@@ -71,6 +71,7 @@ class HostApp extends React.Component {
  * This removes an item from the db and notifies all clients with the newdata event.
  */
   handlePlayerEnd(event){
+    console.log('emitting nextsong with id:', this.props.state.event._id)
     this.socket.emit('nextSong', this.props.state.event._id);
     // $.ajax({
     //   type: "POST",
@@ -82,9 +83,10 @@ class HostApp extends React.Component {
 
   render() {
     let player;
+    console.log('current youtube id:', this.props.state.songs[0].url.split('=')[1])
 
     if (this.props.state.songs.length) {
-      player = <Youtube videoId={this.props.state.songs[0].url} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
+      player = <Youtube videoId={this.props.state.songs[0].url.split('=')[1]} onEnd={this.handlePlayerEnd} onStateChange={this.handleStateChange}/>
     }
     else { player = <div />}
 
