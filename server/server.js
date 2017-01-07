@@ -116,7 +116,6 @@ app.get('/', AuthenticationController.isAuthenticated, (req, res, next) => {
 		.sendFile(path.join(__dirname, '../dist/index.html'));
 })
 
-
 app.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/login');
