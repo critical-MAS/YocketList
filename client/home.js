@@ -16,11 +16,7 @@ class Home extends React.Component {
   newState(newStateObj) {
         this.setState(newStateObj);
   }
-    // this.powers.getData = function() {
-    //     $.get(HOST + "/queue").done((data) => {
-    //         this.setState({songs: data});
-    //       });
-    // };
+
   render() {
     return (
       <div>

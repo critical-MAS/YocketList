@@ -34,5 +34,37 @@
       "username": "crud",
       "favlist": []
     }
+  ],
+  "581b6d649bf66a1de3905e84": [
+    {
+      "_id": "58196d6a149064d48d3a31d9",
+      "google_id": "106835729393714196382",
+      "__v": 0,
+      "username": "Soo",
+      "favlist": []
+    },
+    {
+      "_id": "58196d6a149064d48d3a31d9",
+      "google_id": "106835729393714196382",
+      "__v": 0,
+      "username": "Michael",
+      "favlist": []
+    }
+  ],
+  "581b71236b76c01f8f05373e": [
+    {
+      "_id": "58196d6a149064d48d3a31d9",
+      "google_id": "106835729393714196382",
+      "__v": 0,
+      "username": "Michael",
+      "favlist": []
+    },
+    {
+      "_id": "58196d6a149064d48d3a31d9",
+      "google_id": "106835729393714196382",
+      "__v": 0,
+      "username": "Soo",
+      "favlist": []
+    }
   ]
 }
