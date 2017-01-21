@@ -1,13 +1,13 @@
 $primary: #ccc;
+$primaryTitleFont: "Slabo 27px";
 $secondary: #201a1a;
 $tertiary: #b00;
 $quaternary: aliceblue;
 
 body {
-  width: 100%;
   color: $primary;
   background-color: $secondary;
-  font-family: 'Slabo 27px';
+  font-family: $primaryTitleFont;
 }
 h1 {
   border-radius: 0.5em;
@@ -29,7 +29,7 @@ ul {
 }
 a, button {
   font-size: 1em;
-  font-family: 'Slabo 27px';
+  font-family: $primaryTitleFont;
   text-decoration: none;
   border: none;
   color: $tertiary;
@@ -42,18 +42,13 @@ a:hover, button:hover {
   background-color: $tertiary;
   color: $quaternary;
 }
-button {
-  margin-bottom: 5em;
-}
 input {
   color: $quaternary;
-  text-align: center;
   background-color: $secondary * 1.2;
   border: 1px dashed $quaternary;
+  font-family: $primaryTitleFont;
   padding: 1em 2em;
   border-radius: 3px;
-  font-family: 'Slabo 27px';
-  margin: 2em 2em 0 1em;
 }
 .Action-upVote, .Action-downVote, .Action-Fave {
     width: 1em;
@@ -91,7 +86,6 @@ input {
 }
 .HistoryList {
   float: left;
-  border: 1px dotted #aff;
   width: 45%;
   margin-left: 5%;
   border-radius: 5px;
@@ -102,6 +96,11 @@ input {
   margin : 0em;
   padding : 0.3em;
 
+}
+.Nav {
+  align-items: center;
+  display: flex;
+  font-family: $primaryTitleFont;
 }
 .SongList {
 
@@ -115,4 +114,8 @@ input {
   width: 45%;
   margin-left: 2.5%;
   float: left;
+
+}
+.btn-active svg {
+  fill: red;
 }

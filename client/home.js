@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Nav from './nav';
 
 class Home extends React.Component {
   constructor(props) {
@@ -20,10 +21,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h1>YukeTube</h1>
-        <ul role="nav">
-          <li><Link to="profile">Home</Link></li>
-        </ul>
+        <Nav />
         {this.props.children && React.cloneElement(this.props.children, {
           state: this.state,
           newState: this.newState,
