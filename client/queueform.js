@@ -1,16 +1,47 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 
 class QueueForm extends React.Component {
   render() {
     return (
       <div className="Form-Container">
-        <form name='addLink'>
-          <input id='link' type="text" name="link"></input>
-          <button onClick={this.handleClick.bind(this)} onKeyPress={this._handleChange} type="submit" value="Submit">Submit</button>
+        <form name="addLink">
+          <TextField
+            name="link"
+            type="text"
+            floatingLabelText="Enter YouTube Video URL"
+            inputStyle={{
+              color: 'white',
+              fontFamily: 'Slabo',
+            }}
+            hintStyle={{
+              color: 'white',
+              fontFamily: 'Slabo',
+            }}
+            floatingLabelStyle={{
+              color: 'white',
+              fontFamily: 'Slabo',
+            }}
+            underlineStyle={{ borderColor: 'white' }}
+            underlineFocusStyle={{ borderColor: 'red' }}
+          />
+          <FlatButton
+            type="submit"
+            name="YouTubeURL"
+            label="Add to Queue"
+            hoverColor="red"
+            onClick={this.handleClick.bind(this)}
+            onKeyPress={this._handleChange}
+            labelStyle={{
+              color: 'white',
+              fontFamily: 'Slabo',
+            }}
+            value="Submit"
+          />
         </form>
       </div>
-    )
+    );
   }
 
   /**
@@ -22,7 +53,7 @@ class QueueForm extends React.Component {
     e.preventDefault();
     const form = document.forms.addLink;
     const link = form.link.value;
-    this.props.formClick(link)
+    this.props.formClick(link);
     form.link.value = '';
   }
 
