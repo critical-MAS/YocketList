@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-const HOST = require('../app.config').HOST;
+const HOST = require('./../../app.config').HOST;
 
 class CreateEvent extends React.Component {
   // constructor(props) {

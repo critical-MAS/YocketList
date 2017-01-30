@@ -8,7 +8,7 @@ import HistoryList from '../../common/historylist';
 import GuestBox from '../../common/guestbox';
 import Form from '../../common/queueform';
 
-const HOST = require('../app.config').HOST;
+const HOST = require('./../../../app.config').HOST;
 
 class HostApp extends React.Component {
   constructor() {

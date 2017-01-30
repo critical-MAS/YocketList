@@ -4,7 +4,7 @@ import React from 'react';
 import Form from '../../common/queueform';
 import SongList from '../../common/songlist';
 import HistoryList from '../../common/historylist';
-import GuestBox from './guestbox';
+import GuestBox from './../../common/guestbox';
 import io from 'socket.io-client';
 
 const HOST = "http://localhost:3000";
