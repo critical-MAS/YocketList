@@ -3,11 +3,12 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import Layout from './layout';
 import Profile from './profile';
-import HostApp from './hostapp';
-import GuestApp from './guestapp';
+import HostApp from './host';
+import GuestApp from './guest';
 import CreateEvent from './createevent';
-import Home from './home';
-const HOST = require('../app.config').HOST;
+import Home from '../common/home';
+
+const HOST = require('../../app.config').HOST;
 
 class App extends React.Component {
   constructor(props) {

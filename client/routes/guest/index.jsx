@@ -1,10 +1,10 @@
 import React from 'react';
 // import ReactDOM from 'react-dom';
 // import Song from './song';
-import Form from './queueform';
-import SongList from './songlist';
-import HistoryList from './historylist';
-import GuestBox from'./guestbox';
+import Form from '../../common/queueform';
+import SongList from '../../common/songlist';
+import HistoryList from '../../common/historylist';
+import GuestBox from './guestbox';
 import io from 'socket.io-client';
 
 const HOST = "http://localhost:3000";

@@ -3,10 +3,10 @@ import React from 'react';
 // import Player from './player';
 import Youtube from 'react-youtube';
 import io from 'socket.io-client';
-import SongList from './songlist';
-import HistoryList from './historylist';
-import GuestBox from'./guestbox';
-import Form from './queueform';
+import SongList from '../../common/songlist';
+import HistoryList from '../../common/historylist';
+import GuestBox from '../../common/guestbox';
+import Form from '../../common/queueform';
 
 const HOST = require('../app.config').HOST;
 
