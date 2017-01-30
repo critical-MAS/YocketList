@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 // import ReactDOM from 'react-dom';
-const HOST = require('../app.config').HOST;
+const HOST = require('./../../app.config').HOST;
 
 class Profile extends React.Component {
   constructor(props) {
